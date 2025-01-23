@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  continuous-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+          
+      - name: Create Zipfile
+        run: |
+          mkdir -p build
+          cp -r src/ build/
+          cp -r target/ build/
+          cd build
+          zip -r9 ../fc-erp-backend.zip .
+
+      - name: Deploy new Lambda
+        run: |
+          aws lambda update-function-code --function-name fc-erp-backend --zip-file fileb://fc-erp-backend.zip
+
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_DEPLOY_INTEGRACAO_ETL }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_DEPLOY_INTEGRACAO_ETL }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}

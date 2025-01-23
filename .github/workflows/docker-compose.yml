@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: api_backend
+      POSTGRES_PASSWORD: uUrogTjQXcJHEbVNu
+      POSTGRES_DB: integracao
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./farm_management.dump:/docker-entrypoint-initdb.d/farm_management.dump
+
+volumes:
+  pg-data:
