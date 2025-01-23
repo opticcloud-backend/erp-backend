@@ -1,0 +1,36 @@
+# Ignorar diretórios de build
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Ignorar arquivos de configuração específicos de ambientes
+application-dev.properties
+application-prod.properties
+
+# Ignorar arquivos de configuração do STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Ignorar arquivos de configuração do IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Ignorar arquivos de configuração do NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignorar arquivos de configuração do VS Code
+.vscode/
