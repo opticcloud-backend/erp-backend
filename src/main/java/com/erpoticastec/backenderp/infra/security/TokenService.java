@@ -20,16 +20,13 @@ public class TokenService {
     @Value("${app.jwtSecret}")
     private String secret;
 
-    @Autowired
-    private UserService userService;
-
-    public String generateToken(User user){
+    public String generateToken(String email){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             String token = JWT.create()
                     .withIssuer("login-auth-api-back-end-opticcloud-tec")
-                    .withSubject(user.getEmail())
+                    .withSubject(email)
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
 
@@ -54,23 +51,5 @@ public class TokenService {
 
     private Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-03:00"));
-    }
-
-    public List<Integer> getFazendasFromToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-
-            // Verifica e decodifica o token
-            DecodedJWT decodedJWT = JWT.require(algorithm)
-                    .withIssuer("login-auth-api-back-end-fmt-tec")
-                    .build()
-                    .verify(token);
-
-            List<Integer> fazendas = decodedJWT.getClaim("fazendas").asList(Integer.class);
-
-            return fazendas;
-        } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Invalid token");
-        }
     }
 }
