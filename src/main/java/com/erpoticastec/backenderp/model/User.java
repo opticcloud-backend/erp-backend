@@ -23,7 +23,7 @@ public class User {
     @Column(name = "sobrenome")
     private String sobrenome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_funcao")
     private Role role;
 }
