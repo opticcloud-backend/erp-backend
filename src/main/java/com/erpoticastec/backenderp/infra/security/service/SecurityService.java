@@ -1,4 +1,4 @@
-package com.erpoticastec.backenderp.infra.security;
+package com.erpoticastec.backenderp.infra.security.service;
 
 import com.erpoticastec.backenderp.model.Role;
 import com.erpoticastec.backenderp.model.User;
@@ -13,9 +13,6 @@ public class SecurityService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     public User getUserWithRole(String login) {
         User user = userRepository.findByEmail(login)
