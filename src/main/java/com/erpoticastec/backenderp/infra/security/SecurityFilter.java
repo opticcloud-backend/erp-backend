@@ -1,16 +1,12 @@
 package com.erpoticastec.backenderp.infra.security;
 
-import com.erpoticastec.backenderp.exceptions.UsernameNotFoundException;
-import com.erpoticastec.backenderp.model.Role;
+import com.erpoticastec.backenderp.infra.security.service.SecurityService;
+import com.erpoticastec.backenderp.infra.security.service.TokenService;
 import com.erpoticastec.backenderp.model.User;
-import com.erpoticastec.backenderp.repository.RoleRepository;
-import com.erpoticastec.backenderp.repository.UserRepository;
-import com.erpoticastec.backenderp.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

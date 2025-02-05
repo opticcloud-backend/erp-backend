@@ -1,4 +1,4 @@
-package com.erpoticastec.backenderp.infra.security;
+package com.erpoticastec.backenderp.infra.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

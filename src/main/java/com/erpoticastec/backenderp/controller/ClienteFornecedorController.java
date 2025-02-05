@@ -21,42 +21,26 @@ public class ClienteFornecedorController {
     @Autowired
     ClienteFornecedorService clienteFornecedorService;
 
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<String> cadastrarPessoa(@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO) {
         clienteFornecedorService.cadastrarClienteFornecedor(pessoaRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Cliente/Fornecedor cadastrado com sucesso.");
     }
 
-    @PatchMapping("/atualizar")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> atualizarInformacoes(@Valid @RequestBody PessoaRequestDTO pessoaUpdateDTO) {
         clienteFornecedorService.updateClienteFornecedor(pessoaUpdateDTO);
         return ResponseEntity.ok("Cliente/Fornecedor atualizado com sucesso.");
     }
 
-    @GetMapping("/buscar/documento/{documento}")
-    public ResponseEntity<ClienteFornecedor> buscarPorDocumento(@PathVariable String documento) {
-        ClienteFornecedor clienteFornecedor = clienteFornecedorService.buscarPorCpfCnpj(documento)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente/Fornecedor não encontrado"));
-
-        return ResponseEntity.ok(clienteFornecedor);
-    }
-
-    @GetMapping("/buscar/nome/{nome}")
-    public ResponseEntity<List<ClienteFornecedor>> buscarPorNome(@PathVariable String nome) {
-        List<ClienteFornecedor> clienteFornecedores = clienteFornecedorService.buscarPorNome(nome);
-
+    @GetMapping
+    public ResponseEntity<List<ClienteFornecedor>> buscarClientes(@RequestParam(required = false) String documento,
+                                                                  @RequestParam(required = false) String nome,
+                                                                  @RequestParam(required = false) String email) {
+        List<ClienteFornecedor> clienteFornecedores = clienteFornecedorService.buscarClientes(documento, nome, email);
         if (clienteFornecedores.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(clienteFornecedores);
-    }
-
-    @GetMapping("/buscar/email/{email}")
-    public ResponseEntity<ClienteFornecedor> buscarPorEmail(@PathVariable String email) {
-        ClienteFornecedor clienteFornecedor = clienteFornecedorService.buscarPorEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente/Fornecedor não encontrado"));
-
-        return ResponseEntity.ok(clienteFornecedor);
     }
 }

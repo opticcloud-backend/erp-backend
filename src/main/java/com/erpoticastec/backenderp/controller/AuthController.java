@@ -3,9 +3,10 @@ package com.erpoticastec.backenderp.controller;
 import com.erpoticastec.backenderp.dto.LoginRequestDTO;
 import com.erpoticastec.backenderp.dto.RegisterRequestDTO;
 import com.erpoticastec.backenderp.dto.ResponseDTO;
+import com.erpoticastec.backenderp.dto.ResponseRegisterDTO;
 import com.erpoticastec.backenderp.exceptions.InvalidCredentialsException;
 import com.erpoticastec.backenderp.service.UserService;
-import com.erpoticastec.backenderp.infra.security.TokenService;
+import com.erpoticastec.backenderp.infra.security.service.TokenService;
 import com.erpoticastec.backenderp.model.User;
 import com.erpoticastec.backenderp.repository.RoleRepository;
 import com.erpoticastec.backenderp.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,7 +46,8 @@ public class AuthController {
         }
 
         String token = this.tokenService.generateToken(user.getEmail());
-        return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
+        List<Long> oticaIds = userRepository.findOticaIdsByUsuario(user.getId());
+        return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token, oticaIds));
     }
 
     @PostMapping("/register")
@@ -55,6 +59,6 @@ public class AuthController {
         User newUser = userService.criarUsuario(body);
         String token = tokenService.generateToken(newUser.getEmail());
 
-        return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
+        return ResponseEntity.ok(new ResponseRegisterDTO(newUser.getEmail(), token));
     }
 }

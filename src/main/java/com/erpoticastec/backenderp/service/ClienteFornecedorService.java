@@ -6,6 +6,7 @@ import com.erpoticastec.backenderp.model.TipoPessoa;
 import com.erpoticastec.backenderp.repository.ClienteFornecedorRepository;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Optional;
 
 import com.erpoticastec.backenderp.repository.TipoPessoaRepository;
@@ -34,7 +35,6 @@ public class ClienteFornecedorService {
                 .orElseThrow(() -> new RuntimeException("Tipo de pessoa não encontrado"));
 
         clienteFornecedor.setTipoPessoa(tipoPessoa);
-
         clienteFornecedor.setTelefone(pessoaRequestDTO.telefone());
         clienteFornecedor.setEnderecoLogradouro(pessoaRequestDTO.enderecoLogradouro());
         clienteFornecedor.setEnderecoNumero(pessoaRequestDTO.enderecoNumero());
@@ -54,7 +54,6 @@ public class ClienteFornecedorService {
         ClienteFornecedor existingClienteFornecedor = clienteFornecedorRepository.findById(pessoaUpdateDTO.id())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente/Fornecedor não encontrado"));
 
-        // Atualiza os campos conforme o DTO
         if (pessoaUpdateDTO.nome() != null) {
             existingClienteFornecedor.setNome(pessoaUpdateDTO.nome());
         }
@@ -112,16 +111,23 @@ public class ClienteFornecedorService {
         clienteFornecedorRepository.save(existingClienteFornecedor);
     }
 
+    public List<ClienteFornecedor> buscarClientes(String documento, String nome, String email) {
+        if (documento != null) {
+            return clienteFornecedorRepository.findByDocumento(documento)
+                    .map(List::of)
+                    .orElse(Collections.emptyList());
+        }
 
-    public List<ClienteFornecedor> buscarPorNome(String nome) {
-        return clienteFornecedorRepository.findByNomeContainingIgnoreCase(nome);
-    }
+        if (email != null) {
+            return clienteFornecedorRepository.findByEmail(email)
+                    .map(List::of)
+                    .orElse(Collections.emptyList());
+        }
 
-    public Optional<ClienteFornecedor> buscarPorCpfCnpj(String documento) {
-        return clienteFornecedorRepository.findByDocumento(documento);
-    }
+        if (nome != null) {
+            return clienteFornecedorRepository.findByNomeContainingIgnoreCase(nome);
+        }
 
-    public Optional<ClienteFornecedor> buscarPorEmail(String email) {
-        return clienteFornecedorRepository.findByEmail(email);
+        return clienteFornecedorRepository.findAll();
     }
 }

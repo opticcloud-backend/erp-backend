@@ -1,3 +1,5 @@
 package com.erpoticastec.backenderp.dto;
 
-public record ResponseDTO (String email, String token) { }
+import java.util.List;
+
+public record ResponseDTO (String email, String token, List<Long> id_oticas) { }
