@@ -1,32 +1,33 @@
+version: "3.8"
+
 services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: api_backend
-      POSTGRES_PASSWORD: uUrogTjQXcJHEbVNu
-      POSTGRES_DB: opticclouddev
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
-      - ./docker/backup/backup.dump:/docker-entrypoint-initdb.d/backup.dump
 
   api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/opticclouddev
-      SPRING_DATASOURCE_USERNAME: api_backend
-      SPRING_DATASOURCE_PASSWORD: uUrogTjQXcJHEbVNu
-      SERVER_PORT: 8081
-      SECURITY_USER_NAME: admin
-      SECURITY_USER_PASSWORD: admin
-      jwtSecret: my-secret-key-from-back-end-fmt-tec
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SERVER_PORT: ${SERVER_PORT}
+      SECURITY_USER_NAME: ${SECURITY_USER_NAME}
+      SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
+      jwtSecret: ${jwtSecret}
 
 volumes:
   pg-data:
