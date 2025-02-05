@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: api_backend
+      POSTGRES_PASSWORD: uUrogTjQXcJHEbVNu
+      POSTGRES_DB: opticclouddev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./docker/backup/backup.dump:/docker-entrypoint-initdb.d/backup.dump
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/opticclouddev
+      SPRING_DATASOURCE_USERNAME: api_backend
+      SPRING_DATASOURCE_PASSWORD: uUrogTjQXcJHEbVNu
+      SERVER_PORT: 8081
+      SECURITY_USER_NAME: admin
+      SECURITY_USER_PASSWORD: admin
+      jwtSecret: my-secret-key-from-back-end-fmt-tec
+
+volumes:
+  pg-data:
