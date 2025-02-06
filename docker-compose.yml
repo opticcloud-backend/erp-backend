@@ -11,6 +11,11 @@ services:
       - "5432:5432"
     volumes:
       - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${SPRING_DATASOURCE_USERNAME} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
   api:
     build:
@@ -27,7 +32,7 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
-      jwtSecret: ${jwtSecret}
+      jwtSecret: ${JWTSECRET}
 
 volumes:
   pg-data:
