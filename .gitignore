@@ -21,6 +21,7 @@ application-prod.properties
 *.iws
 *.iml
 *.ipr
+.env
 
 # Ignorar arquivos de configuração do NetBeans
 /nbproject/private/

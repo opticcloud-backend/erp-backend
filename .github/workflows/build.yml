@@ -24,11 +24,13 @@ jobs:
 
       - name: Build and run Docker Compose
         env:
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
           SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           SECURITY_USER_NAME: ${{ secrets.SECURITY_USER_NAME }}
           SECURITY_USER_PASSWORD: ${{ secrets.SECURITY_USER_PASSWORD }}
-          jwtSecret: ${{ secrets.jwtSecret }}
+          JWTSECRET: ${{ secrets.JWTSECRET }}
         run: |
           docker compose up --build
