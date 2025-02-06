@@ -34,7 +34,7 @@ jobs:
           JWTSECRET: ${{ secrets.JWTSECRET }}
         run: |
           docker compose -f docker-compose.yml down
-          docker compose -f docker-compose.yml up --build --no-cache -d
+          docker compose -f docker-compose.yml up --build -d
 
       - name: Verify Docker Compose up success
         run: |
