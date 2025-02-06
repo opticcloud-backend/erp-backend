@@ -36,6 +36,15 @@ jobs:
           docker compose -f docker-compose.yml down
           docker compose -f docker-compose.yml up --build -d
 
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: "./"
+          target: "/home/ubuntu/erp-backend"
+
       - name: SSH to EC2 and run Docker Compose
         uses: appleboy/ssh-action@v0.1.5
         with:
