@@ -15,7 +15,6 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
-
   api:
     build:
       context: .
@@ -35,6 +34,5 @@ services:
       jwtSecret: ${JWTSECRET}
     env_file:
       - .env
-
 volumes:
   pg-data:
