@@ -24,7 +24,7 @@ jobs:
 
       - name: Check database connectivity
         run: |
-          until pg_isready -h ${{ secrets.POSTGRES_HOST }} -U ${{ secrets.SPRING_DATASOURCE_USERNAME }} -d ${{ secrets.POSTGRES_DB }}; do
+          until docker exec -it db pg_isready -U ${{ secrets.SPRING_DATASOURCE_USERNAME }} -d ${{ secrets.POSTGRES_DB }}; do
             echo "Waiting for PostgreSQL to become available..."
             sleep 5
           done
