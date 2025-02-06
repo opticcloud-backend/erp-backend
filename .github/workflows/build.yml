@@ -31,4 +31,4 @@ jobs:
           SECURITY_USER_PASSWORD: ${{ secrets.SECURITY_USER_PASSWORD }}
           jwtSecret: ${{ secrets.jwtSecret }}
         run: |
-          docker-compose up --build
+          docker compose up --build
