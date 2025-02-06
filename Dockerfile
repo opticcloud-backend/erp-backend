@@ -4,5 +4,5 @@ WORKDIR /app
 COPY pom.xml /app/
 COPY src /app/src
 RUN mvn clean package -DskipTests
-EXPOSE 8081
+EXPOSE 8080
 CMD ["java", "-jar", "/app/target/erp-backend-1.0-SNAPSHOT.jar"]
