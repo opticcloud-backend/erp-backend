@@ -45,8 +45,8 @@ jobs:
           SECURITY_USER_PASSWORD: ${{ secrets.SECURITY_USER_PASSWORD }}
           JWTSECRET: ${{ secrets.JWTSECRET }}
         run: |
-          docker-compose -f docker-compose.yml down
-          docker-compose -f docker-compose.yml up --build --no-cache -d
+          docker compose -f docker-compose.yml down
+          docker compose -f docker-compose.yml up --build --no-cache -d
 
       - name: Remove old Docker containers
         run: |
