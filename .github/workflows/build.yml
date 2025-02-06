@@ -56,15 +56,21 @@ jobs:
             docker-compose down
             docker-compose up --build -d
 
-      - name: Verify Docker Compose up success
-        run: |
-          docker-compose ps
+      - name: Verify Docker Compose up success on EC2
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/erp-backend
+            docker-compose ps
 
-      - name: Clean up unused volumes and images
+      - name: Clean up unused volumes and images locally
         run: |
           docker system prune -af
 
-      - name: Remove old Docker containers
+      - name: Remove old Docker containers locally
         run: |
           docker ps -a -q --filter "status=exited" | xargs -r docker rm
           docker volume prune -f
