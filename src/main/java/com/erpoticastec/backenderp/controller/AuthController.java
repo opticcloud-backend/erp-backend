@@ -31,6 +31,7 @@ public class AuthController {
 
     @Autowired
     private final UserRepository userRepository;
+
     @Autowired
     private UserService userService;
 
@@ -52,8 +53,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDTO body) {
-        if (userRepository.existsByEmail(body.email())) {
-            return ResponseEntity.badRequest().body("Usuário já cadastrado!");
+        if (Boolean.TRUE.equals(userRepository.existsByEmail(body.email()))) {
+            return ResponseEntity.badRequest().body("Usuario ja cadastrado!");
         }
 
         User newUser = userService.criarUsuario(body);
