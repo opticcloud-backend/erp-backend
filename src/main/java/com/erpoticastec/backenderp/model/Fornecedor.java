@@ -7,22 +7,28 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "pessoa", schema = "opticcloud")
-public class ClienteFornecedor {
-
+@Table(name = "fornecedor", schema = "opticcloud")
+public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false, length = 255)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "otica_id", nullable = false, referencedColumnName = "id")
+    private Otica idOtica;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_id", nullable = false, referencedColumnName = "id")
-    private TipoPessoa tipoPessoa;
+    @JoinColumn(name = "usuario_cadastro_id", nullable = false, referencedColumnName = "id")
+    private Usuario idUsuarioCadastro;
 
-    @Column(name = "documento", nullable = false, unique = true, length = 20)
-    private String documento;
+    @Column(name = "razao_social", nullable = false, length = 255)
+    private String razaoSocial;
+
+    @Column(name = "nome_fantasia", length = 255)
+    private String nomeFantasia;
+
+    @Column(name = "cnpj", nullable = false, unique = true, length = 18)
+    private String cnpj;
 
     @Column(name = "email", length = 255)
     private String email;
@@ -55,8 +61,14 @@ public class ClienteFornecedor {
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @Column(name = "ativo", nullable = false)
-    private Boolean ativo = true;
+    private Boolean ativo;
 
-    @Column(name = "observacoes")
+    @Column(name = "observacoes", length = 255)
     private String observacoes;
+
+    @Column(name = "inscricao_estadual", length = 20)
+    private String inscricaoEstadual;
+
+    @Column(name = "prazo_pagamento")
+    private Integer prazoPagamento;
 }

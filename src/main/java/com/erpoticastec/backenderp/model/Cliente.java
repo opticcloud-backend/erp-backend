@@ -18,7 +18,7 @@ public class Cliente {
 
     @ManyToOne
     @JoinColumn(name = "usuario_cadastro_id", nullable = false, referencedColumnName = "id")
-    private User usuario;
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "otica_id", nullable = false, referencedColumnName = "id")
@@ -97,4 +97,3 @@ public class Cliente {
     @Column(name = "observacoes")
     private String observacoes;
 }
-

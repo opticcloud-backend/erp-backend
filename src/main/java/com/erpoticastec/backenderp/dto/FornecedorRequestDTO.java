@@ -1,13 +1,14 @@
 package com.erpoticastec.backenderp.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.Data;
 
-public record PessoaRequestDTO(
+public record FornecedorRequestDTO(
         Long id,
-        @Size(max = 255, message = "O nome não pode exceder 255 caracteres.") String nome,
-        Long tipoPessoaId,
-        @Pattern(regexp = "\\d{11}|\\d{14}", message = "O documento deve ter 11 (CPF) ou 14 (CNPJ) dígitos.") String documento,
+        @NotNull(message = "O ID da ótica não pode ser nulo.") Long idOtica,
+        @NotNull(message = "O ID do usuário de cadastro não pode ser nulo.") Long idUsuarioCadastro,
+        @NotNull(message = "A razão social não pode ser nula.") @Size(max = 255, message = "A razão social não pode exceder 255 caracteres.") String razaoSocial,
+        @Size(max = 255, message = "O nome fantasia não pode exceder 255 caracteres.") String nomeFantasia,
+        @NotNull(message = "O CNPJ não pode ser nulo.") @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}", message = "O CNPJ deve ser válido.") String cnpj,
         @Email(message = "O e-mail deve ser válido.") @Size(max = 255, message = "O e-mail não pode exceder 255 caracteres.") String email,
         @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "O telefone deve seguir o formato (XX) XXXXX-XXXX.") String telefone,
         @Size(max = 255, message = "O logradouro não pode exceder 255 caracteres.") String enderecoLogradouro,
@@ -18,6 +19,8 @@ public record PessoaRequestDTO(
         @Size(max = 50, message = "O estado não pode exceder 50 caracteres.") String enderecoEstado,
         @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve seguir o formato XXXXX-XXX.") String enderecoCep,
         Boolean ativo,
-        @Size(max = 500, message = "As observações não podem exceder 500 caracteres.") String observacoes
-) {
-}
+        @Size(max = 255, message = "As observações não podem exceder 255 caracteres.") String observacoes,
+        @Size(max = 20, message = "A inscrição estadual não pode exceder 20 caracteres.") String inscricaoEstadual,
+        Integer prazoPagamento
+) {}
+

@@ -2,7 +2,7 @@ package com.erpoticastec.backenderp.infra.security;
 
 import com.erpoticastec.backenderp.infra.security.service.SecurityService;
 import com.erpoticastec.backenderp.infra.security.service.TokenService;
-import com.erpoticastec.backenderp.model.User;
+import com.erpoticastec.backenderp.model.Usuario;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +29,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         if (login != null) {
-            User user = securityService.getUserWithRole(login);
+            Usuario usuario = securityService.getUserWithRole(login);
 
-            var authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getNameRole()));
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+            var authorities = Collections.singletonList(new SimpleGrantedAuthority(usuario.getRole().getNameRole()));
+            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
