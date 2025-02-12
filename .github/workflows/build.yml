@@ -53,7 +53,7 @@ jobs:
           source: "backend.tar.gz"
           target: "/home/ubuntu/erp-backend"
 
-      - name: Uncompress files on EC2
+      - name: Uncompress files on EC2 and move backup.dump
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -61,8 +61,11 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/erp-backend
-            tar -xzf backend.tar.gz  
-            rm -f backend.tar.gz  
+            tar -xzf backend.tar.gz
+            rm -f backend.tar.gz
+            
+            mkdir -p /home/ubuntu/erp-backend/docker/backup
+            mv backup.dump /home/ubuntu/erp-backend/docker/backup/backup.dump
 
       - name: SSH to EC2 and run Docker Compose
         uses: appleboy/ssh-action@v0.1.5
