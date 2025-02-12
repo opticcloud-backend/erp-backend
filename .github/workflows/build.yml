@@ -65,6 +65,7 @@ jobs:
             rm -f backend.tar.gz
             
             mkdir -p /home/ubuntu/erp-backend/docker/backup
+            rm -f /home/ubuntu/erp-backend/docker/backup/backup.dump
             mv backup.dump /home/ubuntu/erp-backend/docker/backup/backup.dump
 
       - name: SSH to EC2 and run Docker Compose
