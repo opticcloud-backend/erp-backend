@@ -8,7 +8,7 @@ import com.erpoticastec.backenderp.exceptions.InvalidCredentialsException;
 import com.erpoticastec.backenderp.model.Usuario;
 import com.erpoticastec.backenderp.service.UsuarioService;
 import com.erpoticastec.backenderp.infra.security.service.TokenService;
-import com.erpoticastec.backenderp.repository.RoleRepository;
+import com.erpoticastec.backenderp.repository.FuncaoRepository;
 import com.erpoticastec.backenderp.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class AuthController {
     private UsuarioService usuarioService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private FuncaoRepository funcaoRepository;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO body){
