@@ -1,6 +1,5 @@
 package com.erpoticastec.backenderp.repository;
 
-import com.erpoticastec.backenderp.model.ClienteFornecedor;
 import com.erpoticastec.backenderp.model.TipoPessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 

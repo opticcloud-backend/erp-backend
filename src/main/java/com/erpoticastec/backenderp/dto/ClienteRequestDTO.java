@@ -1,9 +1,11 @@
 package com.erpoticastec.backenderp.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.Data;
 
-public record PessoaRequestDTO(
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public record ClienteRequestDTO(
         Long id,
         @Size(max = 255, message = "O nome não pode exceder 255 caracteres.") String nome,
         Long tipoPessoaId,
@@ -18,6 +20,19 @@ public record PessoaRequestDTO(
         @Size(max = 50, message = "O estado não pode exceder 50 caracteres.") String enderecoEstado,
         @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve seguir o formato XXXXX-XXX.") String enderecoCep,
         Boolean ativo,
-        @Size(max = 500, message = "As observações não podem exceder 500 caracteres.") String observacoes
+        @Size(max = 500, message = "As observações não podem exceder 500 caracteres.") String observacoes,
+
+        Long usuarioCadastroId,
+        Long oticaId,
+        LocalDate dataNascimento,
+        @Size(max = 255, message = "A razão social não pode exceder 255 caracteres.") String razaoSocial,
+        @Size(max = 255, message = "O nome fantasia não pode exceder 255 caracteres.") String nomeFantasia,
+        @Size(max = 20, message = "A inscrição estadual não pode exceder 20 caracteres.") String inscricaoEstadual,
+        @Size(max = 255, message = "O responsável legal não pode exceder 255 caracteres.") String responsavelLegal,
+        BigDecimal limiteCredito,
+        Long formaPagamentoPreferidaId,
+        @Size(max = 255, message = "O indicador de cliente não pode exceder 255 caracteres.") String indicadorCliente,
+        @Size(max = 500, message = "As preferências não podem exceder 500 caracteres.") String preferencias
 ) {
 }
+
