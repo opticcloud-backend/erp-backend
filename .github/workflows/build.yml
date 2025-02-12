@@ -22,6 +22,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build JAR file
+        run: |
+          mvn clean package -DskipTests
+
       - name: Build and run Docker Compose locally (with cache)
         env:
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
@@ -35,10 +39,11 @@ jobs:
         run: |
           docker compose -f docker-compose.yml up --build --no-deps -d
 
-      - name: Compress files
+      - name: Compress necessary files
         run: |
           mkdir temp_dir
-          rsync -av --exclude=".git" --exclude="target" . temp_dir/
+          cp docker-compose.yml Dockerfile temp_dir/
+          cp target/*.jar temp_dir/app.jar
           tar -czf backend.tar.gz -C temp_dir .
           rm -rf temp_dir
 

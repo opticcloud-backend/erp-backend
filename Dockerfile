@@ -1,8 +1,5 @@
 FROM openjdk:21-jdk-slim
-RUN apt-get update && apt-get install -y maven
 WORKDIR /app
-COPY pom.xml /app/
-COPY src /app/src
-RUN mvn clean package -DskipTests
+COPY app.jar /app/app.jar
 EXPOSE 8080
-CMD ["java", "-jar", "/app/target/erp-backend-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
