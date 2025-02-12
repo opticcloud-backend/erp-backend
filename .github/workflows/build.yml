@@ -44,7 +44,7 @@ jobs:
           mkdir temp_dir
 
           cp docker-compose.yml Dockerfile temp_dir/
-          cp application-prod.properties application.properties temp_dir/
+          cp src/main/resources/application-prod.properties src/main/resources/application.properties temp_dir/
           cp target/erp-backend-1.0-SNAPSHOT.jar temp_dir/
           cp .env temp_dir/
           cp docker/backup/backup.dump temp_dir/
