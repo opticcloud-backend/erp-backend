@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Entity
 @Data
-
-@Table(name = "funcoes")
-public class Role {
+@Table(name = "funcoes", schema = "opticcloud")
+public class Funcao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

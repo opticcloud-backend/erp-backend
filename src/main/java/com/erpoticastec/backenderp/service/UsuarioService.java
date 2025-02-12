@@ -2,9 +2,9 @@ package com.erpoticastec.backenderp.service;
 
 import com.erpoticastec.backenderp.dto.RegisterRequestDTO;
 import com.erpoticastec.backenderp.exceptions.UsernameNotFoundException;
-import com.erpoticastec.backenderp.model.Role;
+import com.erpoticastec.backenderp.model.Funcao;
 import com.erpoticastec.backenderp.model.Usuario;
-import com.erpoticastec.backenderp.repository.RoleRepository;
+import com.erpoticastec.backenderp.repository.FuncaoRepository;
 import com.erpoticastec.backenderp.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+    private final FuncaoRepository funcaoRepository;
 
     public Usuario criarUsuario(RegisterRequestDTO body) {
         Usuario newUsuario = new Usuario();
@@ -26,9 +26,9 @@ public class UsuarioService {
         newUsuario.setNome(body.nome());
         newUsuario.setSobrenome(body.sobrenome());
 
-        Role role = roleRepository.findById(body.idfuncao())
+        Funcao funcao = funcaoRepository.findById(body.idfuncao())
                 .orElseThrow(() -> new RuntimeException("Role not found"));
-        newUsuario.setRole(role);
+        newUsuario.setFuncao(funcao);
 
         return usuarioRepository.save(newUsuario);
     }
