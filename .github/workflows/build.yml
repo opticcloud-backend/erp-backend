@@ -42,11 +42,15 @@ jobs:
       - name: Compress necessary files
         run: |
           mkdir temp_dir
+
           cp docker-compose.yml Dockerfile temp_dir/
+          cp application-prod.properties application.properties temp_dir/
           cp target/erp-backend-1.0-SNAPSHOT.jar temp_dir/
           cp .env temp_dir/
           cp docker/backup/backup.dump temp_dir/
+          
           tar -czf backend.tar.gz -C temp_dir .
+          
           rm -rf temp_dir
 
       - name: Copy files to EC2
