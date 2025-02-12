@@ -26,18 +26,18 @@ jobs:
         run: |
           mvn clean package -DskipTests
 
-      - name: Build and run Docker Compose locally (with cache)
-        env:
-          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SECURITY_USER_NAME: ${{ secrets.SECURITY_USER_NAME }}
-          SECURITY_USER_PASSWORD: ${{ secrets.SECURITY_USER_PASSWORD }}
-          JWTSECRET: ${{ secrets.JWTSECRET }}
-        run: |
-          docker compose -f docker-compose.yml up --build --no-deps -d
+#      - name: Build and run Docker Compose locally (with cache)
+#        env:
+#          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+#          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+#          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+#          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+#          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+#          SECURITY_USER_NAME: ${{ secrets.SECURITY_USER_NAME }}
+#          SECURITY_USER_PASSWORD: ${{ secrets.SECURITY_USER_PASSWORD }}
+#          JWTSECRET: ${{ secrets.JWTSECRET }}
+#        run: |
+#          docker compose -f docker-compose.yml up --build --no-deps -d
 
       - name: Compress necessary files
         run: |
