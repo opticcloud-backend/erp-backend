@@ -17,15 +17,15 @@ public class Cliente {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_cadastro_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "id_usuario_cadastro", nullable = false, referencedColumnName = "id")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "otica_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "id_otica", nullable = false, referencedColumnName = "id")
     private Otica otica;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_pessoa_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "id_tipo_pessoa", nullable = false, referencedColumnName = "id")
     private TipoPessoa tipoPessoa;
 
     @Column(name = "nome_completo", nullable = false)
@@ -79,8 +79,9 @@ public class Cliente {
     @Column(name = "limite_credito", precision = 10, scale = 2)
     private BigDecimal limiteCredito;
 
-    @Column(name = "forma_pagamento_preferida")
-    private String formaPagamentoPreferida;
+    @ManyToOne
+    @JoinColumn(name = "id_forma_pagamento_preferida", nullable = false, referencedColumnName = "id")
+    private FormaPagamento formaPagamentoPreferida;
 
     @Column(name = "indicador_cliente")
     private String indicadorCliente;

@@ -13,7 +13,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     List<Cliente> findByEmailAndOticaId(String email, Long idOtica);
 
-    List<Cliente> findByNomeContainingIgnoreCaseAndOticaId(String nome, Long idOtica);
+    List<Cliente> findByNomeCompletoContainingIgnoreCaseAndOticaId(String nomeCompleto, Long idOtica);
 
     List<Cliente> findByOticaId(Long idOtica);
 }

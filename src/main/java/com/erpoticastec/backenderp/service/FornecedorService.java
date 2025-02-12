@@ -10,6 +10,8 @@ import com.erpoticastec.backenderp.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -29,11 +31,11 @@ public class FornecedorService {
 
         Usuario usuarioCadastro = usuarioRepository.findById(fornecedorRequestDTO.idUsuarioCadastro())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        fornecedor.setIdUsuarioCadastro(usuarioCadastro);
+        fornecedor.setUsuario(usuarioCadastro);
 
         Otica otica = oticaRepository.findById(fornecedorRequestDTO.idOtica())
                 .orElseThrow(() -> new RuntimeException("Ótica não encontrada"));
-        fornecedor.setIdOtica(otica);
+        fornecedor.setOtica(otica);
 
         fornecedor.setRazaoSocial(fornecedorRequestDTO.razaoSocial());
         fornecedor.setNomeFantasia(fornecedorRequestDTO.nomeFantasia());
@@ -139,6 +141,6 @@ public class FornecedorService {
             return fornecedorRepository.findByRazaoSocialContainingIgnoreCaseAndOticaId(razaoSocial, idOtica);
         }
 
-        return fornecedorRepository.findByOticaId(idOtica);
+        return Collections.emptyList();
     }
 }

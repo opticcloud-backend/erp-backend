@@ -30,7 +30,7 @@ public record ClienteRequestDTO(
         @Size(max = 20, message = "A inscrição estadual não pode exceder 20 caracteres.") String inscricaoEstadual,
         @Size(max = 255, message = "O responsável legal não pode exceder 255 caracteres.") String responsavelLegal,
         BigDecimal limiteCredito,
-        @Size(max = 255, message = "A forma de pagamento preferida não pode exceder 255 caracteres.") String formaPagamentoPreferida,
+        Long formaPagamentoPreferidaId,
         @Size(max = 255, message = "O indicador de cliente não pode exceder 255 caracteres.") String indicadorCliente,
         @Size(max = 500, message = "As preferências não podem exceder 500 caracteres.") String preferencias
 ) {

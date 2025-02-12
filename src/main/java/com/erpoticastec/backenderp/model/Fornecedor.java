@@ -14,12 +14,12 @@ public class Fornecedor {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "otica_id", nullable = false, referencedColumnName = "id")
-    private Otica idOtica;
+    @JoinColumn(name = "id_otica", nullable = false, referencedColumnName = "id")
+    private Otica otica;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_cadastro_id", nullable = false, referencedColumnName = "id")
-    private Usuario idUsuarioCadastro;
+    @JoinColumn(name = "id_usuario_cadastro", nullable = false, referencedColumnName = "id")
+    private Usuario usuario;
 
     @Column(name = "razao_social", nullable = false, length = 255)
     private String razaoSocial;

@@ -39,7 +39,7 @@ public class FornecedorController {
     public ResponseEntity<List<Fornecedor>> buscarFornecedores(@RequestParam(required = false) String cnpj,
                                                                @RequestParam(required = false) String razaoSocial,
                                                                @RequestParam(required = false) String email,
-                                                               @RequestParam(required = false) Long idOtica) {
+                                                               @RequestParam(required = true) Long idOtica) {
 
         if (idOtica == null) {
             return ResponseEntity.badRequest().body(Collections.emptyList());
