@@ -43,7 +43,9 @@ jobs:
         run: |
           mkdir temp_dir
           cp docker-compose.yml Dockerfile temp_dir/
-          cp target/*.jar temp_dir/app.jar
+          cp target/erp-backend-1.0-SNAPSHOT.jar temp_dir/
+          cp .env temp_dir/
+          cp docker/backup/backup.dump temp_dir/
           tar -czf backend.tar.gz -C temp_dir .
           rm -rf temp_dir
 
@@ -64,8 +66,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             cd /home/ubuntu/erp-backend
-            tar -xzf backend.tar.gz
-            rm -f backend.tar.gz
+            tar -xzf backend.tar.gz  
+            rm -f backend.tar.gz  
 
       - name: SSH to EC2 and run Docker Compose
         uses: appleboy/ssh-action@v0.1.5
