@@ -37,11 +37,11 @@ public class ClienteService {
         cliente.setEmail(clienteRequestDTO.email());
         cliente.setDocumento(clienteRequestDTO.documento());
 
-        TipoPessoa tipoPessoa = tipoPessoaRepository.findById(clienteRequestDTO.tipoPessoaId())
+        TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(clienteRequestDTO.tipoCliente())
                 .orElseThrow(() -> new RuntimeException("Tipo de pessoa nao encontrado"));
         cliente.setTipoPessoa(tipoPessoa);
 
-        Usuario usuarioCadastro = usuarioRepository.findById(clienteRequestDTO.usuarioCadastroId())
+        Usuario usuarioCadastro = usuarioRepository.findByEmail(clienteRequestDTO.emailUsuarioCadastro())
                 .orElseThrow(() -> new RuntimeException("Usuario ao encontrado"));
         cliente.setUsuario(usuarioCadastro);
 
@@ -64,9 +64,8 @@ public class ClienteService {
         cliente.setResponsavelLegal(clienteRequestDTO.responsavelLegal());
         cliente.setLimiteCredito(clienteRequestDTO.limiteCredito());
 
-        FormaPagamento formaPagamento = formaPagamentoRepository.findById(clienteRequestDTO.formaPagamentoPreferidaId())
+        FormaPagamento formaPagamento = formaPagamentoRepository.findByMetodo(clienteRequestDTO.metodoPagamentoPreferido())
                 .orElseThrow(() -> new EntityNotFoundException("Forma de pagamento nao encontrada"));
-
         cliente.setFormaPagamentoPreferida(formaPagamento);
 
         cliente.setIndicadorCliente(clienteRequestDTO.indicadorCliente());
@@ -130,8 +129,8 @@ public class ClienteService {
             existingClienteFornecedor.setObservacoes(pessoaUpdateDTO.observacoes());
         }
 
-        if (pessoaUpdateDTO.tipoPessoaId() != null) {
-            TipoPessoa tipoPessoa = tipoPessoaRepository.findById(pessoaUpdateDTO.tipoPessoaId())
+        if (pessoaUpdateDTO.tipoCliente() != null) {
+            TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(pessoaUpdateDTO.tipoCliente())
                     .orElseThrow(() -> new EntityNotFoundException("Tipo de Pessoa não encontrado"));
             existingClienteFornecedor.setTipoPessoa(tipoPessoa);
         }
@@ -160,8 +159,8 @@ public class ClienteService {
             existingClienteFornecedor.setLimiteCredito(pessoaUpdateDTO.limiteCredito());
         }
 
-        if (pessoaUpdateDTO.formaPagamentoPreferidaId() != null) {
-            FormaPagamento formaPagamento = formaPagamentoRepository.findById(pessoaUpdateDTO.formaPagamentoPreferidaId())
+        if (pessoaUpdateDTO.metodoPagamentoPreferido() != null) {
+            FormaPagamento formaPagamento = formaPagamentoRepository.findByMetodo(pessoaUpdateDTO.metodoPagamentoPreferido())
                     .orElseThrow(() -> new EntityNotFoundException("Forma de pagamento nao encontrado"));
 
             existingClienteFornecedor.setFormaPagamentoPreferida(formaPagamento);
