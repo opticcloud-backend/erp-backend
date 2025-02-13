@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public record ClienteRequestDTO(
         Long id,
         @Size(max = 255, message = "O nome não pode exceder 255 caracteres.") String nome,
-        Long tipoPessoaId,
+        String tipoCliente,
         @Pattern(regexp = "\\d{11}|\\d{14}", message = "O documento deve ter 11 (CPF) ou 14 (CNPJ) dígitos.") String documento,
         @Email(message = "O e-mail deve ser válido.") @Size(max = 255, message = "O e-mail não pode exceder 255 caracteres.") String email,
         @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "O telefone deve seguir o formato (XX) XXXXX-XXXX.") String telefone,
@@ -21,8 +21,7 @@ public record ClienteRequestDTO(
         @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve seguir o formato XXXXX-XXX.") String enderecoCep,
         Boolean ativo,
         @Size(max = 500, message = "As observações não podem exceder 500 caracteres.") String observacoes,
-
-        Long usuarioCadastroId,
+        String emailUsuarioCadastro,
         Long oticaId,
         LocalDate dataNascimento,
         @Size(max = 255, message = "A razão social não pode exceder 255 caracteres.") String razaoSocial,
@@ -30,7 +29,7 @@ public record ClienteRequestDTO(
         @Size(max = 20, message = "A inscrição estadual não pode exceder 20 caracteres.") String inscricaoEstadual,
         @Size(max = 255, message = "O responsável legal não pode exceder 255 caracteres.") String responsavelLegal,
         BigDecimal limiteCredito,
-        Long formaPagamentoPreferidaId,
+        String metodoPagamentoPreferido,
         @Size(max = 255, message = "O indicador de cliente não pode exceder 255 caracteres.") String indicadorCliente,
         @Size(max = 500, message = "As preferências não podem exceder 500 caracteres.") String preferencias
 ) {
