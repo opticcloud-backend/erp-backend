@@ -3,7 +3,7 @@ package com.erpoticastec.backenderp.dto;
 import jakarta.validation.constraints.*;
 
 public record FornecedorRequestDTO(
-        Long id,
+        Long idFornecedor,
         @NotNull(message = "O ID da ótica não pode ser nulo.") Long idOtica,
         @NotNull(message = "O ID do usuário de cadastro não pode ser nulo.") Long idUsuarioCadastro,
         @NotNull(message = "A razão social não pode ser nula.") @Size(max = 255, message = "A razão social não pode exceder 255 caracteres.") String razaoSocial,

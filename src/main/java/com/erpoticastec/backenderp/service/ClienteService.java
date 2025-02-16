@@ -34,7 +34,7 @@ public class ClienteService {
     public void cadastrarCliente(ClienteRequestDTO clienteRequestDTO) {
         Cliente cliente = new Cliente();
         cliente.setNomeCompleto(clienteRequestDTO.nome());
-        cliente.setEmail(clienteRequestDTO.email());
+        cliente.setEmail(clienteRequestDTO.emailCliente());
         cliente.setDocumento(clienteRequestDTO.documento());
 
         TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(clienteRequestDTO.tipoCliente())
@@ -78,15 +78,15 @@ public class ClienteService {
     }
 
     public void updateCliente(ClienteRequestDTO pessoaUpdateDTO) {
-        Cliente existingClienteFornecedor = clienteRepository.findById(pessoaUpdateDTO.id())
+        Cliente existingClienteFornecedor = clienteRepository.findById(pessoaUpdateDTO.idCliente())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
         if (pessoaUpdateDTO.nome() != null) {
             existingClienteFornecedor.setNomeCompleto(pessoaUpdateDTO.nome());
         }
 
-        if (pessoaUpdateDTO.email() != null) {
-            existingClienteFornecedor.setEmail(pessoaUpdateDTO.email());
+        if (pessoaUpdateDTO.emailCliente() != null) {
+            existingClienteFornecedor.setEmail(pessoaUpdateDTO.emailCliente());
         }
 
         if (pessoaUpdateDTO.telefone() != null) {

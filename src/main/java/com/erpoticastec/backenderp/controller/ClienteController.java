@@ -5,34 +5,50 @@ import com.erpoticastec.backenderp.model.Cliente;
 import com.erpoticastec.backenderp.service.ClienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
+
     @Autowired
     ClienteService clienteService;
 
     @PostMapping
     public ResponseEntity<String> cadastrarCliente(@Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
-        clienteService.cadastrarCliente(clienteRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
+        logger.info("Requisição para cadastrar cliente do idOtica: {}, ClienteRequestDTO: {}", clienteRequestDTO.oticaId(), clienteRequestDTO);
+        try {
+            clienteService.cadastrarCliente(clienteRequestDTO);
+            logger.info("Cliente do idOtica {} cadastrado com sucesso: {}", clienteRequestDTO.oticaId(), clienteRequestDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
+        } catch (Exception e) {
+            logger.error("Erro ao cadastrar cliente do idOtica: {}", clienteRequestDTO.oticaId(), e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao cadastrar cliente.");
+        }
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> atualizarInformacoes(@Valid @RequestBody ClienteRequestDTO pessoaUpdateDTO) {
-        clienteService.updateCliente(pessoaUpdateDTO);
-        return ResponseEntity.ok("Cliente atualizado com sucesso.");
+    public ResponseEntity<String> atualizarInformacoes(@PathVariable Long id, @Valid @RequestBody ClienteRequestDTO pessoaUpdateDTO) {
+        logger.info("Recebida requisição para atualizar cliente idOtica {}: {}", id, pessoaUpdateDTO);
+        try {
+            clienteService.updateCliente(pessoaUpdateDTO);
+            logger.info("Cliente do idOtica {} atualizado com sucesso: {}", id, pessoaUpdateDTO);
+            return ResponseEntity.ok("Cliente atualizado com sucesso.");
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar cliente do idOtica {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar cliente.");
+        }
     }
 
     @GetMapping
@@ -40,15 +56,26 @@ public class ClienteController {
                                                         @RequestParam(required = false) String nome,
                                                         @RequestParam(required = false) String email,
                                                         @RequestParam(required = true) Long idOtica) {
+        logger.info("Recebida requisição para buscar clientes do idOtica: {}, documento: {}, nome: {}, email: {}", idOtica, documento, nome, email);
+
         if (idOtica == null) {
+            logger.warn("Parâmetro idOtica é obrigatório, mas não foi fornecido");
             return ResponseEntity.badRequest().body(Collections.emptyList());
         }
 
-        List<Cliente> clienteFornecedores = clienteService.buscarClientes(documento, nome, email, idOtica);
-        if (clienteFornecedores.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        try {
+            List<Cliente> clienteFornecedores = clienteService.buscarClientes(documento, nome, email, idOtica);
 
-        return ResponseEntity.ok(clienteFornecedores);
+            if (clienteFornecedores.isEmpty()) {
+                logger.info("Nenhum cliente encontrado para os parâmetros fornecidos.");
+                return ResponseEntity.noContent().build();
+            }
+
+            logger.info("Clientes encontrados: {}", clienteFornecedores);
+            return ResponseEntity.ok(clienteFornecedores);
+        } catch (Exception e) {
+            logger.error("Erro ao buscar clientes: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
     }
 }
