@@ -58,7 +58,7 @@ public class FornecedorService {
     }
 
     public void updateFornecedor(FornecedorRequestDTO fornecedorRequestDTO) {
-        Fornecedor fornecedor = fornecedorRepository.findById(fornecedorRequestDTO.id())
+        Fornecedor fornecedor = fornecedorRepository.findById(fornecedorRequestDTO.idFornecedor())
                 .orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
 
         if (fornecedorRequestDTO.razaoSocial() != null) {
