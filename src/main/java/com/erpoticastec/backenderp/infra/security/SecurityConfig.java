@@ -69,7 +69,7 @@ public class SecurityConfig {
         return (request, response, authException) -> {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Acesso nao autorizado\"}");
+            response.getWriter().write("{\"error\": \"Usuario nao autenticado\"}");
         };
     }
 
