@@ -38,15 +38,15 @@ public class ClienteService {
         cliente.setDocumento(clienteRequestDTO.documento());
 
         TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(clienteRequestDTO.tipoCliente())
-                .orElseThrow(() -> new RuntimeException("Tipo de pessoa nao encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Tipo de pessoa nao encontrado"));
         cliente.setTipoPessoa(tipoPessoa);
 
         Usuario usuarioCadastro = usuarioRepository.findByEmail(clienteRequestDTO.emailUsuarioCadastro())
-                .orElseThrow(() -> new RuntimeException("Usuario ao encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario ao encontrado"));
         cliente.setUsuario(usuarioCadastro);
 
         Otica otica = oticaRepository.findById(clienteRequestDTO.oticaId())
-                .orElseThrow(() -> new RuntimeException("Otica nao encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Otica nao encontrada"));
         cliente.setOtica(otica);
 
         cliente.setTelefone(clienteRequestDTO.telefone());
@@ -57,7 +57,7 @@ public class ClienteService {
         cliente.setEnderecoCidade(clienteRequestDTO.enderecoCidade());
         cliente.setEnderecoEstado(clienteRequestDTO.enderecoEstado());
         cliente.setEnderecoCep(clienteRequestDTO.enderecoCep());
-        cliente.setDataNascimento(clienteRequestDTO.dataNascimento());
+        cliente.setDataNascimento(((clienteRequestDTO.dataNascimento() != null) || clienteRequestDTO.dataNascimento().toString().isEmpty()) ? clienteRequestDTO.dataNascimento() : null);
         cliente.setRazaoSocial(clienteRequestDTO.razaoSocial());
         cliente.setNomeFantasia(clienteRequestDTO.nomeFantasia());
         cliente.setInscricaoEstadual(clienteRequestDTO.inscricaoEstadual());
