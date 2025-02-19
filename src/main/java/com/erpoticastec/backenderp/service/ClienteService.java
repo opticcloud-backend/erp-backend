@@ -3,15 +3,13 @@ package com.erpoticastec.backenderp.service;
 import com.erpoticastec.backenderp.dto.ClienteRequestDTO;
 import com.erpoticastec.backenderp.model.*;
 import com.erpoticastec.backenderp.repository.*;
-
 import java.time.LocalDateTime;
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -79,7 +77,7 @@ public class ClienteService {
 
     public void updateCliente(ClienteRequestDTO pessoaUpdateDTO) {
         Cliente existingClienteFornecedor = clienteRepository.findById(pessoaUpdateDTO.idCliente())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente nao encontrado"));
 
         if (pessoaUpdateDTO.nome() != null) {
             existingClienteFornecedor.setNomeCompleto(pessoaUpdateDTO.nome());
@@ -178,7 +176,7 @@ public class ClienteService {
     }
 
 
-    public List<Cliente> buscarClientes(String documento, String nome, String email, Long idOtica) {
+    public Optional<List<Cliente>> buscarClientes(String documento, String nome, String email, Long idOtica) {
         if (documento != null) {
             return clienteRepository.findByDocumentoAndOticaId(documento, idOtica);
         }
@@ -191,6 +189,6 @@ public class ClienteService {
             return clienteRepository.findByNomeCompletoContainingIgnoreCaseAndOticaId(nome, idOtica);
         }
 
-        return Collections.emptyList();
+        return Optional.of(Collections.emptyList());
     }
 }
