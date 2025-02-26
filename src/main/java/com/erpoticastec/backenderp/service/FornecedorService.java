@@ -7,6 +7,7 @@ import com.erpoticastec.backenderp.model.Usuario;
 import com.erpoticastec.backenderp.repository.FornecedorRepository;
 import com.erpoticastec.backenderp.repository.OticaRepository;
 import com.erpoticastec.backenderp.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,11 @@ public class FornecedorService {
         Fornecedor fornecedor = new Fornecedor();
 
         Usuario usuarioCadastro = usuarioRepository.findById(fornecedorRequestDTO.idUsuarioCadastro())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
         fornecedor.setUsuario(usuarioCadastro);
 
         Otica otica = oticaRepository.findById(fornecedorRequestDTO.idOtica())
-                .orElseThrow(() -> new RuntimeException("Ótica não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Otica nao encontrada"));
         fornecedor.setOtica(otica);
 
         fornecedor.setRazaoSocial(fornecedorRequestDTO.razaoSocial());
@@ -59,7 +60,7 @@ public class FornecedorService {
 
     public void updateFornecedor(FornecedorRequestDTO fornecedorRequestDTO) {
         Fornecedor fornecedor = fornecedorRepository.findById(fornecedorRequestDTO.idFornecedor())
-                .orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Fornecedor nao encontrado"));
 
         if (fornecedorRequestDTO.razaoSocial() != null) {
             fornecedor.setRazaoSocial(fornecedorRequestDTO.razaoSocial());

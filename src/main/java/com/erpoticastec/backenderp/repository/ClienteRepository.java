@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    List<Cliente> findByDocumentoAndOticaId(String documento, Long idOtica);
+    Optional<List<Cliente>> findByDocumentoAndOticaId(String documento, Long idOtica);
 
-    List<Cliente> findByEmailAndOticaId(String email, Long idOtica);
+    Optional<List<Cliente>> findByEmailAndOticaId(String email, Long idOtica);
 
-    List<Cliente> findByNomeCompletoContainingIgnoreCaseAndOticaId(String nomeCompleto, Long idOtica);
+    Optional<List<Cliente>> findByNomeCompletoContainingIgnoreCaseAndOticaId(String nomeCompleto, Long idOtica);
 
-    List<Cliente> findByOticaId(Long idOtica);
+    Optional<List<Cliente>> findByOticaId(Long idOtica);
 }

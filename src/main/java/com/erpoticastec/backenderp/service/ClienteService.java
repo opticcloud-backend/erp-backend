@@ -3,15 +3,13 @@ package com.erpoticastec.backenderp.service;
 import com.erpoticastec.backenderp.dto.ClienteRequestDTO;
 import com.erpoticastec.backenderp.model.*;
 import com.erpoticastec.backenderp.repository.*;
-
 import java.time.LocalDateTime;
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -38,16 +36,20 @@ public class ClienteService {
         cliente.setDocumento(clienteRequestDTO.documento());
 
         TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(clienteRequestDTO.tipoCliente())
-                .orElseThrow(() -> new EntityNotFoundException("Tipo de pessoa nao encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Tipo de pessoa '%s' nao encontrado", clienteRequestDTO.tipoCliente())));
         cliente.setTipoPessoa(tipoPessoa);
 
         Usuario usuarioCadastro = usuarioRepository.findByEmail(clienteRequestDTO.emailUsuarioCadastro())
-                .orElseThrow(() -> new EntityNotFoundException("Usuario ao encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Usuario com e-mail '%s' nao encontrado", clienteRequestDTO.emailUsuarioCadastro())));
         cliente.setUsuario(usuarioCadastro);
 
         Otica otica = oticaRepository.findById(clienteRequestDTO.oticaId())
-                .orElseThrow(() -> new EntityNotFoundException("Otica nao encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Otica com ID '%d' nao encontrada", clienteRequestDTO.oticaId())));
         cliente.setOtica(otica);
+
 
         cliente.setTelefone(clienteRequestDTO.telefone());
         cliente.setEnderecoLogradouro(clienteRequestDTO.enderecoLogradouro());
@@ -57,7 +59,7 @@ public class ClienteService {
         cliente.setEnderecoCidade(clienteRequestDTO.enderecoCidade());
         cliente.setEnderecoEstado(clienteRequestDTO.enderecoEstado());
         cliente.setEnderecoCep(clienteRequestDTO.enderecoCep());
-        cliente.setDataNascimento(((clienteRequestDTO.dataNascimento() != null) || clienteRequestDTO.dataNascimento().toString().isEmpty()) ? clienteRequestDTO.dataNascimento() : null);
+        cliente.setDataNascimento(clienteRequestDTO.dataNascimento());
         cliente.setRazaoSocial(clienteRequestDTO.razaoSocial());
         cliente.setNomeFantasia(clienteRequestDTO.nomeFantasia());
         cliente.setInscricaoEstadual(clienteRequestDTO.inscricaoEstadual());
@@ -65,7 +67,8 @@ public class ClienteService {
         cliente.setLimiteCredito(clienteRequestDTO.limiteCredito());
 
         FormaPagamento formaPagamento = formaPagamentoRepository.findByMetodo(clienteRequestDTO.metodoPagamentoPreferido())
-                .orElseThrow(() -> new EntityNotFoundException("Forma de pagamento nao encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Forma de pagamento %s nao encontrada", clienteRequestDTO.metodoPagamentoPreferido())));
+
         cliente.setFormaPagamentoPreferida(formaPagamento);
 
         cliente.setIndicadorCliente(clienteRequestDTO.indicadorCliente());
@@ -79,7 +82,7 @@ public class ClienteService {
 
     public void updateCliente(ClienteRequestDTO pessoaUpdateDTO) {
         Cliente existingClienteFornecedor = clienteRepository.findById(pessoaUpdateDTO.idCliente())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente nao encontrado"));
 
         if (pessoaUpdateDTO.nome() != null) {
             existingClienteFornecedor.setNomeCompleto(pessoaUpdateDTO.nome());
@@ -131,7 +134,8 @@ public class ClienteService {
 
         if (pessoaUpdateDTO.tipoCliente() != null) {
             TipoPessoa tipoPessoa = tipoPessoaRepository.findByDescricao(pessoaUpdateDTO.tipoCliente())
-                    .orElseThrow(() -> new EntityNotFoundException("Tipo de Pessoa não encontrado"));
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            String.format("Tipo de pessoa '%s' nao encontrado", pessoaUpdateDTO.tipoCliente())));
             existingClienteFornecedor.setTipoPessoa(tipoPessoa);
         }
 
@@ -161,7 +165,7 @@ public class ClienteService {
 
         if (pessoaUpdateDTO.metodoPagamentoPreferido() != null) {
             FormaPagamento formaPagamento = formaPagamentoRepository.findByMetodo(pessoaUpdateDTO.metodoPagamentoPreferido())
-                    .orElseThrow(() -> new EntityNotFoundException("Forma de pagamento nao encontrado"));
+                    .orElseThrow(() -> new EntityNotFoundException(String.format("Forma de pagamento %s nao encontrada", pessoaUpdateDTO.metodoPagamentoPreferido())));
 
             existingClienteFornecedor.setFormaPagamentoPreferida(formaPagamento);
         }
@@ -178,7 +182,7 @@ public class ClienteService {
     }
 
 
-    public List<Cliente> buscarClientes(String documento, String nome, String email, Long idOtica) {
+    public Optional<List<Cliente>> buscarClientes(String documento, String nome, String email, Long idOtica) {
         if (documento != null) {
             return clienteRepository.findByDocumentoAndOticaId(documento, idOtica);
         }
@@ -191,6 +195,6 @@ public class ClienteService {
             return clienteRepository.findByNomeCompletoContainingIgnoreCaseAndOticaId(nome, idOtica);
         }
 
-        return Collections.emptyList();
+        return Optional.of(Collections.emptyList());
     }
 }
