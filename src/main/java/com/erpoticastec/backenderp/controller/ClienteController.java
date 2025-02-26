@@ -1,6 +1,7 @@
 package com.erpoticastec.backenderp.controller;
 
 import com.erpoticastec.backenderp.dto.ClienteRequestDTO;
+import com.erpoticastec.backenderp.dto.SuccessDTO;
 import com.erpoticastec.backenderp.exceptions.ClienteJaCadastradoException;
 import com.erpoticastec.backenderp.exceptions.InvalidCredentialsException;
 import com.erpoticastec.backenderp.model.Cliente;
@@ -41,13 +42,13 @@ public class ClienteController {
 
         if (!clientesExistentes.isEmpty()) {
             logger.warn("Cliente com documento {} já cadastrado anteriormente", clienteRequestDTO.documento());
-            throw new ClienteJaCadastradoException("Cliente com documento " + clienteRequestDTO.documento() + " já cadastrado anteriormente");
+            throw new ClienteJaCadastradoException("Cliente já cadastrado anteriormente");
         }
 
         clienteService.cadastrarCliente(clienteRequestDTO);
 
         logger.info("Cliente do idOtica {} cadastrado com sucesso: {}", clienteRequestDTO.oticaId(), clienteRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessDTO("Cliente cadastrado com sucesso"));
     }
 
 
