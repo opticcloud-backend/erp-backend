@@ -1,9 +1,8 @@
 name: Docker Deployment
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]  # Roda apenas quando uma release é publicada
 
 jobs:
   deploy:
