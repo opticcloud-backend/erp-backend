@@ -1,4 +1,24 @@
+version: '3.8'
+
 services:
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana:10.3.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
   db:
     image: postgres:17.2
     restart: unless-stopped
@@ -16,6 +36,7 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
+
   api:
     build:
       context: .
@@ -32,8 +53,9 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
-      jwtSecret: ${JWTSECRET}
+      JWT_SECRET: ${JWT_SECRET}
     env_file:
       - .env
+
 volumes:
   pg-data:
