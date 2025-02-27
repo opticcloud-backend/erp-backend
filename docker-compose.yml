@@ -54,7 +54,7 @@ services:
       SERVER_PORT: ${SERVER_PORT}
       SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
-      JWT_SECRET: ${JWTSECRET}
+      jwtSecret: ${JWTSECRET}
     env_file:
       - .env
 
