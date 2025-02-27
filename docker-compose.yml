@@ -1,4 +1,25 @@
 services:
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: prometheus
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana:10.3.1
+    container_name: grafana
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
   db:
     image: postgres:17.2
     restart: unless-stopped
@@ -16,6 +37,7 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
+
   api:
     build:
       context: .
@@ -35,5 +57,8 @@ services:
       jwtSecret: ${JWTSECRET}
     env_file:
       - .env
+
 volumes:
   pg-data:
+  prometheus-data:
+  grafana-data:

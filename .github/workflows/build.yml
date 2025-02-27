@@ -1,8 +1,9 @@
 name: Docker Deployment
 
 on:
-  release:
-    types: [published]  # Roda apenas quando uma release é publicada
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -38,7 +39,7 @@ jobs:
           cp target/erp-backend-1.0-SNAPSHOT.jar temp_dir/
           cp .env temp_dir/
           cp docker/backup/backup.dump temp_dir/
-          
+          cp .github/workflows/prometheus.yml temp_dir/
           tar -czf backend.tar.gz -C temp_dir .
           
           rm -rf temp_dir
