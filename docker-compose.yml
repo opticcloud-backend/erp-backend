@@ -1,4 +1,15 @@
 services:
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${SPRING_DATASOURCE_USERNAME}:${SPRING_DATASOURCE_PASSWORD}@db:5432/${POSTGRES_DB}?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
   prometheus:
     image: prom/prometheus:v2.51.2
     container_name: prometheus
