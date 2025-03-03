@@ -58,14 +58,14 @@ jobs:
             .github/workflows/prometheus.yml
 
       - name: Copy files to EC2
-        uses: appleboy/scp-action@v1.0.0
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: "backend.tar.gz"
           target: "/home/ubuntu/erp-backend"
-          timeout: 120s
+          timeout: "120s"
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -87,10 +87,10 @@ jobs:
 
             docker system prune -af --volumes
             docker image prune -f
-          timeout: 300s
+          timeout: "300s"
 
       - name: Verify deployment
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
@@ -107,7 +107,7 @@ jobs:
             fi
             
             echo "Deploy finalizado com sucesso"
-          timeout: 60s
+          timeout: "60s"
 
       - name: Clean up local Docker resources
         if: always()
