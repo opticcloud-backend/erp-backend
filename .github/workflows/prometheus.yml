@@ -6,4 +6,4 @@ scrape_configs:
   - job_name: 'spring-boot-app'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['3.148.144.16:8080']
+      - targets: ['3.15.29.21:8080']
