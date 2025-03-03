@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -76,5 +77,21 @@ public class AuthController {
         logger.info("Usuário registrado com sucesso: {} (ID: {})", newUsuario.getEmail(), newUsuario.getId());
 
         return ResponseEntity.ok(new ResponseRegisterDTO(newUsuario.getEmail(), token));
+    }
+
+    @GetMapping("/validate")
+    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token invalido ou ausente");
+        }
+
+        String token = authHeader.substring(7);
+        String user = tokenService.validateToken(token);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token invalido ou expirado");
+        }
+
+        return ResponseEntity.ok("Token válido");
     }
 }
