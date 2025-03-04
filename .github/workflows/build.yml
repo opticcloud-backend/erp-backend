@@ -47,7 +47,7 @@ jobs:
 
       - name: Create deployment package
         run: |
-          cp .github/workflows/prometheus.yml ./prometheus.yml
+          cp prometheus.yml ./prometheus.yml
           tar -czf backend.tar.gz \
             docker-compose.yml \
             Dockerfile \
@@ -79,7 +79,7 @@ jobs:
             tar -xzf backend.tar.gz
             rm -f backend.tar.gz
             
-            mv .github/workflows/prometheus.yml ./prometheus.yml
+            mv prometheus.yml ./prometheus.yml
             mkdir -p /home/ubuntu/erp-backend/docker/backup
             mv backup.dump /home/ubuntu/erp-backend/docker/backup/backup.dump || true
             docker-compose down --remove-orphans || true
