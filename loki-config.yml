@@ -29,6 +29,7 @@ storage_config:
   boltdb_shipper:
     active_index_directory: /home/ubuntu/erp-backend/var/loki/index
     cache_location: /home/ubuntu/erp-backend/var/loki/index_cache
+    compactor_directory: /home/ubuntu/erp-backend/var/loki/compactor
 
 limits_config:
   reject_old_samples: true
