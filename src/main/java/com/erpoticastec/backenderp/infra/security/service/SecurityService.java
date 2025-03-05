@@ -13,8 +13,7 @@ public class SecurityService {
     private UsuarioRepository usuarioRepository;
 
     public Usuario getUserWithRole(String login) {
-        Usuario usuario = usuarioRepository.findByEmail(login)
+        return usuarioRepository.findByEmail(login)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return usuario;
     }
 }
