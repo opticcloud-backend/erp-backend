@@ -17,10 +17,3 @@ scrape_configs:
         labels:
           service: 'postgres'
           instance: 'postgres-exporter'
-
-  - job_name: 'promtail'
-    static_configs:
-      - targets: ['promtail:9080']
-        labels:
-          service: 'logs'
-          instance: 'promtail'
