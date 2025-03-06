@@ -80,7 +80,6 @@ jobs:
             tar -xzf backend.tar.gz
             rm -f backend.tar.gz
             
-            # Mover os arquivos para a raiz do diretório
             mv application-prod.properties /home/ubuntu/erp-backend/ || true
             mv application.properties /home/ubuntu/erp-backend/ || true
             mv erp-backend-1.0-SNAPSHOT.jar /home/ubuntu/erp-backend/ || true
@@ -89,7 +88,6 @@ jobs:
             mv loki.yml /home/ubuntu/erp-backend/ || true
             mv promtail.yml /home/ubuntu/erp-backend/ || true
       
-            # Remover as pastas antigas (se necessário)
             rm -rf src/main/resources
             rm -rf docker/backup
             rm -rf monitoramento/prometheus
