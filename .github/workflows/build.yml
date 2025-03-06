@@ -50,14 +50,14 @@ jobs:
           tar -czf backend.tar.gz \
             docker-compose.yml \
             Dockerfile \
-            src/main/resources/application-prod.properties \
-            src/main/resources/application.properties \
-            target/erp-backend-1.0-SNAPSHOT.jar \
             .env \
-            docker/backup/backup.dump \
-            monitoramento/prometheus/prometheus.yml \
-            monitoramento/loki/loki.yml \
-            monitoramento/promtail/promtail.yml
+            -C src/main/resources application-prod.properties \
+            -C src/main/resources application.properties \
+            -C target erp-backend-1.0-SNAPSHOT.jar \
+            -C docker/backup backup.dump \
+            -C monitoramento/prometheus prometheus.yml \
+            -C monitoramento/loki loki.yml \
+            -C monitoramento/promtail promtail.yml
 
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.4
@@ -81,7 +81,7 @@ jobs:
             rm -f backend.tar.gz
             
             mkdir -p /home/ubuntu/erp-backend/docker/backup
-            mv backup.dump /home/ubuntu/erp-backend/docker/backup/backup.dump || true
+            mv backup.dump /home/ubuntu/erp-backend/backup.dump || true
             docker-compose down --remove-orphans || true
             docker-compose up --build -d 
             docker-compose ps
