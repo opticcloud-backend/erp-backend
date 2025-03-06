@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "cofins_situacao_tributaria", schema = "opticcloud")
 public class CofinsSituacaoTributaria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
