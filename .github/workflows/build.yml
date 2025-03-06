@@ -55,9 +55,9 @@ jobs:
             target/erp-backend-1.0-SNAPSHOT.jar \
             .env \
             docker/backup/backup.dump \
-            prometheus.yml \
-            loki-config.yml \
-            promtail-config.yml
+            monitoramento/prometheus/prometheus.yml \
+            monitoramento/loki/loki.yml \
+            monitoramento/promtail/promtail.yml
 
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.4

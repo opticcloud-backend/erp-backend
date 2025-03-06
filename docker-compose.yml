@@ -26,18 +26,15 @@ services:
     container_name: loki
     ports:
       - "3100:3100"
-    command: -config.file=/etc/loki/loki-config.yml
-    volumes:
-      - loki-data:/var/loki
-      - ./loki-config.yml:/etc/loki/loki-config.yml
+    command: [ "--config.file=/mnt/config/loki.yaml" ]
 
   promtail:
     image: grafana/promtail:latest
     container_name: promtail
     volumes:
       - ./logs:/var/log
-      - ./promtail-config.yml:/etc/promtail/promtail-config.yml
-    command: -config.file=/etc/promtail/promtail-config.yml
+      - ./promtail.yml:/mnt/config/promtail.yaml
+    command: --config.file=/mnt/config/promtail.yaml
     depends_on:
       - loki
 
@@ -50,7 +47,6 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
-      - loki
 
   db:
     image: postgres:17.2

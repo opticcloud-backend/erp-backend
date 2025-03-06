@@ -3,16 +3,16 @@ server:
   grpc_listen_port: 0
 
 positions:
-  filename: /var/log/positions.yaml
+  filename: /tmp/positions.yaml
 
 clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-  - job_name: "spring-boot-logs"
+  - job_name: system
     static_configs:
       - targets:
           - localhost
         labels:
-          job: "spring-boot"
-          __path__: "/app/logs/*.log"
+          job: varlogs
+          __path__: /var/log/*log
