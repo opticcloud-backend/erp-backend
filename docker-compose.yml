@@ -35,8 +35,8 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /home/ubuntu/erp-backend/loki.yaml
-        target: /mnt/config/loki.yaml
+        source: /home/ubuntu/erp-backend/loki.yml
+        target: /mnt/config/loki.yml
         bind:
           create_host_path: true
 
