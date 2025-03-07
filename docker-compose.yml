@@ -23,7 +23,7 @@ services:
 
   loki:
     command:
-      - --config.file=/mnt/config/loki.yaml
+      - --config.file=/mnt/config/loki.yml
     container_name: loki
     image: grafana/loki:latest
     networks:
@@ -45,8 +45,8 @@ services:
     container_name: promtail
     volumes:
       - ./logs:/var/log
-      - ./promtail.yml:/mnt/config/promtail.yaml
-    command: --config.file=/mnt/config/promtail.yaml
+      - ./promtail.yml:/mnt/config/promtail.yml
+    command: --config.file=/mnt/config/promtail.yml
     depends_on:
       - loki
 
