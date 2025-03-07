@@ -102,11 +102,11 @@ jobs:
             mv -f monitoramento/promtail/promtail.yml /home/ubuntu/erp-backend/
             echo "promtail.yml movido"
             
-            sudo rm -rf src/main/resources
-            sudo rm -rf docker/backup
-            sudo rm -rf monitoramento/prometheus
-            sudo rm -rf monitoramento/loki
-            sudo rm -rf monitoramento/promtail
+            sudo rm -rf src/
+            sudo rm -rf docker/
+            sudo rm -rf monitoramento/
+            sudo rm -rf target/
+            sudo rm -rf logs/
             
             echo "Pastas apos remocao:"
             ls -l /home/ubuntu/erp-backend
