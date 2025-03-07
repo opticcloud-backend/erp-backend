@@ -79,23 +79,35 @@ jobs:
             cd /home/ubuntu/erp-backend
             tar -xzf backend.tar.gz
             rm -f backend.tar.gz
+
+
+            mv -f src/main/resources/application-prod.properties /home/ubuntu/erp-backend/
+            echo "application-prod.properties movido"
             
-            [ -f src/main/resources/application-prod.properties ] && mv src/main/resources/application-prod.properties /home/ubuntu/erp-backend/ && echo "application-prod.properties movido" || echo "application-prod.properties não encontrado"
-            [ -f src/main/resources/application.properties ] && mv src/main/resources/application.properties /home/ubuntu/erp-backend/ && echo "application.properties movido" || echo "application.properties não encontrado"
-            [ -f target/erp-backend-1.0-SNAPSHOT.jar ] && mv target/erp-backend-1.0-SNAPSHOT.jar /home/ubuntu/erp-backend/ && echo "erp-backend-1.0-SNAPSHOT.jar movido" || echo "erp-backend-1.0-SNAPSHOT.jar não encontrado"
-            [ -f docker/backup/backup.dump ] && mv docker/backup/backup.dump /home/ubuntu/erp-backend/ && echo "backup.dump movido" || echo "backup.dump não encontrado"
-            [ -f monitoramento/prometheus/prometheus.yml ] && mv monitoramento/prometheus/prometheus.yml /home/ubuntu/erp-backend/ && echo "prometheus.yml movido" || echo "prometheus.yml não encontrado"
-            [ -f monitoramento/loki/loki.yml ] && mv monitoramento/loki/loki.yml /home/ubuntu/erp-backend/ && echo "loki.yml movido" || echo "loki.yml não encontrado"
-            [ -f monitoramento/promtail/promtail.yml ] && mv monitoramento/promtail/promtail.yml /home/ubuntu/erp-backend/ && echo "promtail.yml movido" || echo "promtail.yml não encontrado"
+            mv -f src/main/resources/application.properties /home/ubuntu/erp-backend/
+            echo "application.properties movido"
+            
+            mv -f target/erp-backend-1.0-SNAPSHOT.jar /home/ubuntu/erp-backend/
+            echo "erp-backend-1.0-SNAPSHOT.jar movido"
+            
+            mv -f docker/backup/backup.dump /home/ubuntu/erp-backend/
+            echo "backup.dump movido"
+            
+            mv -f monitoramento/prometheus/prometheus.yml /home/ubuntu/erp-backend/
+            echo "prometheus.yml movido"
+            
+            mv -f monitoramento/loki/loki.yml /home/ubuntu/erp-backend/
+            echo "loki.yml movido"
+            
+            mv -f monitoramento/promtail/promtail.yml /home/ubuntu/erp-backend/
+            echo "promtail.yml movido"
             
             sudo rm -rf src/main/resources
             sudo rm -rf docker/backup
             sudo rm -rf monitoramento/prometheus
             sudo rm -rf monitoramento/loki
             sudo rm -rf monitoramento/promtail
-                  
-            mkdir -p /home/ubuntu/erp-backend/docker/backup
-            mv backup.dump /home/ubuntu/erp-backend/backup.dump || true
+
             docker-compose down --remove-orphans || true
             docker-compose up --build -d 
             docker-compose ps
