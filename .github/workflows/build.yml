@@ -107,6 +107,9 @@ jobs:
             sudo rm -rf monitoramento/prometheus
             sudo rm -rf monitoramento/loki
             sudo rm -rf monitoramento/promtail
+            
+            echo "Pastas apos remocao:"
+            ls -l /home/ubuntu/erp-backend
 
             docker-compose down --remove-orphans || true
             docker-compose up --build -d 
