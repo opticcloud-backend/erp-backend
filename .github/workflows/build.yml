@@ -106,7 +106,6 @@ jobs:
             sudo rm -rf docker/
             sudo rm -rf monitoramento/
             sudo rm -rf target/
-            sudo rm -rf logs/
             
             echo "Pastas apos remocao:"
             ls -l /home/ubuntu/erp-backend
